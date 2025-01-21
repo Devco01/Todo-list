@@ -37,6 +37,13 @@ function TodoList() {
   });
   const [selectedTime, setSelectedTime] = useState(currentTime);
 
+  // Obtenir la date actuelle pour le copyright
+  const currentDate = new Date().toLocaleDateString('fr-FR', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+
   useEffect(() => {
     try {
       localStorage.setItem('todos', JSON.stringify(todos));
@@ -156,6 +163,9 @@ function TodoList() {
           ) : (
             <p>Aucune tâche planifiée</p>
           )}
+        </div>
+        <div className="copyright">
+          © 2025 - {currentDate} - DevCo
         </div>
       </div>
 
