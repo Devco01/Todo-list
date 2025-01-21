@@ -1,0 +1,388 @@
+/* Réinitialisation des styles de base */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  background-image: url('../public/images/background image.jpg');
+  background-size: 700px auto; /* Largeur fixe en pixels, hauteur auto */
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-color: #000000e7; /* Ajoute un fond noir pour les bords */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow-x: hidden; /* Empêche le scroll horizontal */
+}
+
+.App {
+  min-height: 100vh;
+  display: flex;
+  padding: 0; /* Supprime tout padding */
+}
+
+/* Style du conteneur principal */
+.app-container {
+  display: flex;
+  width: 100vw;
+  justify-content: space-between;
+  border: none;
+  gap: 0;
+  padding: 0;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Style du conteneur de la todo list (à gauche) */
+.todo-container {
+  width: 30%;
+  background-color: rgba(19, 19, 19, 0.7);
+  padding: 10px;
+  color: white;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  min-height: 100vh;
+  height: auto;
+  border: none;
+  margin: 20px 0;
+  border-radius: 10px;
+  position: fixed;
+  left: 15px; /* Décalé de la gauche */
+  top: 0;
+  bottom: auto;
+  overflow-y: auto;
+  text-align: center;
+}
+
+/* Style du calendrier */
+.calendar-container {
+  width: 30%;
+  background-color: rgba(19, 19, 19, 0.7);
+  padding: 40px;
+  color: white;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  min-height: 100vh;
+  height: auto;
+  border: none;
+  margin: 20px 0;
+  border-radius: 10px;
+  position: fixed;
+  right: 15px; /* Décalé de la droite */
+  top: 0;
+  bottom: auto;
+  overflow-y: auto;
+}
+
+/* Style du conteneur date et heure */
+.datetime-picker {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+/* Style commun pour les sélecteurs de date et heure */
+.date-picker,
+.time-picker {
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.9);
+  font-size: 16px;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.date-picker {
+  flex: 2;
+}
+
+.time-picker {
+  flex: 1;
+}
+
+.date-picker:hover,
+.time-picker:hover {
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Style pour l'affichage de l'heure dans la liste */
+.todo-time {
+  font-size: 0.85em;
+  color: #2196F3;
+  margin-right: 12px;
+  padding: 4px 8px;
+  background-color: rgba(33, 150, 243, 0.1);
+  border-radius: 4px;
+  min-width: 70px;
+  text-align: center;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+}
+
+/* Style des groupes de dates */
+.date-group {
+  background-color: rgba(255, 255, 255, 0.05);
+  margin-bottom: 20px;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.date-group:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateX(-5px);
+}
+
+.date-group h3 {
+  color: #4CAF50;
+  font-size: 1.1em;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  letter-spacing: 0.5px;
+}
+
+.date-group ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.date-group li {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  margin: 8px 0;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  color: white;
+  opacity: 0.9;
+  transition: all 0.2s ease;
+  font-size: 0.95em;
+}
+
+.date-group li:hover {
+  opacity: 1;
+  padding-left: 5px;
+}
+
+.date-group li.completed {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+/* Style de la barre de défilement pour les conteneurs */
+.todo-container::-webkit-scrollbar,
+.calendar-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.todo-container::-webkit-scrollbar-track,
+.calendar-container::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.todo-container::-webkit-scrollbar-thumb,
+.calendar-container::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+.todo-container::-webkit-scrollbar-thumb:hover,
+.calendar-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Ajustement du conteneur des tâches par date */
+.date-todos {
+  max-height: none; /* Supprime la hauteur maximale fixe */
+  overflow-y: visible; /* Supprime le défilement interne */
+  padding-right: 10px;
+}
+
+/* Message quand il n'y a pas de tâches */
+.date-todos p {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.6);
+  font-style: italic;
+  margin-top: 20px;
+}
+
+/* Ajustement des titres */
+h1, h2 {
+  text-align: center;
+  color: white;
+  margin-bottom: 30px;
+  font-size: 2em;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  letter-spacing: 1px;
+}
+
+/* Le reste des styles reste identique... */
+
+/* Ajustement pour les éléments internes */
+.todo-form, .todo-list, .date-picker, .filters {
+  max-width: 100%;
+}
+
+/* Style du formulaire */
+.todo-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centre les éléments du formulaire */
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.todo-form input {
+  width: 90%; /* Réduit légèrement la largeur pour l'esthétique */
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.9);
+  font-size: 16px;
+}
+
+/* Style des éléments de la liste */
+.todo-list {
+  width: 100%;
+  padding: 0;
+  list-style: none;
+}
+
+.todo-list li {
+  background-color: rgba(255, 255, 255, 0.05);
+  margin: 12px auto; /* Centre les éléments horizontalement */
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-size: 1.1em;
+  width: 95%; /* Légèrement plus étroit que le conteneur */
+}
+
+/* Style des boutons d'action et du bouton Ajouter */
+.todo-form button,
+.filter-btn,
+.edit-btn {
+  background-color: #2196F3;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.todo-form button:hover,
+.filter-btn:hover,
+.edit-btn:hover {
+  background-color: #1976D2;
+}
+
+/* Style spécifique pour les boutons de filtre */
+.filter-btn {
+  background-color: rgba(33, 150, 243, 0.2); /* Version plus transparente du bleu */
+  border: 1px solid rgba(33, 150, 243, 0.3);
+  min-width: 100px; /* Largeur fixe pour l'alignement */
+}
+
+.filter-btn:hover {
+  background-color: rgba(33, 150, 243, 0.3);
+  transform: translateY(-2px);
+}
+
+.filter-btn.active {
+  background-color: #2196F3;
+  border-color: #2196F3;
+}
+
+/* Le bouton supprimer reste en rouge */
+.delete-btn {
+  background-color: #dc3545;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.delete-btn:hover {
+  background-color: #c82333;
+}
+
+/* Style des filtres */
+.filters {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin: 25px auto; /* Centre les filtres */
+  width: 100%;
+}
+
+/* Style des checkboxes */
+input[type="checkbox"] {
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Style du texte des tâches */
+.todo-list li span {
+  font-size: 1.1em;
+  flex: 1;
+  padding: 0 10px;
+}
+
+/* Animation pour les éléments complétés */
+.completed span {
+  text-decoration: line-through;
+  opacity: 0.6;
+  transition: all 0.3s ease;
+}
+
+/* Style des boutons d'action */
+.todo-actions {
+  display: flex;
+  gap: 15px;
+  margin-left: auto;
+}
+
+/* Ajustement des boutons pour qu'ils soient plus compacts */
+.edit-btn, .delete-btn {
+  padding: 8px 16px;
+  font-size: 0.9em;
+  min-width: 85px;
+}
+
+/* Style du bouton de nettoyage */
+.clear-btn {
+  background-color: #dc3545;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  opacity: 0.7;
+  margin-top: 20px;
+  font-size: 0.9em;
+}
+
+.clear-btn:hover {
+  opacity: 1;
+  background-color: #c82333;
+} 
